@@ -1,0 +1,12 @@
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\bin\Debug\net6.0\LightMessanger.Contracts.deps.json
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\bin\Debug\net6.0\LightMessanger.Contracts.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\bin\Debug\net6.0\ref\LightMessanger.Contracts.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\bin\Debug\net6.0\LightMessanger.Contracts.pdb
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\LightMessanger.Contracts.csproj.AssemblyReference.cache
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\LightMessanger.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\LightMessanger.Contracts.AssemblyInfoInputs.cache
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\LightMessanger.Contracts.AssemblyInfo.cs
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\LightMessanger.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\LightMessanger.Contracts.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\ref\LightMessanger.Contracts.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.Contracts\obj\Debug\net6.0\LightMessanger.Contracts.pdb
