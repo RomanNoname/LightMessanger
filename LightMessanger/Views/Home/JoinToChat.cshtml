@@ -1,0 +1,28 @@
+﻿@using LightMessanger.Contracts
+@model Group
+@{
+	ViewData["Title"] = @Model?.Name;
+}
+<div class="row">
+	<div class="col-auto text-center col-md-offset-5">
+		<div class="card mb-4 rounded-3 shadow-sm">
+			<div class="card-header py-3">
+				<h4 class="my-0 fw-normal"></h4>
+			</div>
+			<div class="card-body">
+				<h1 class="card-title pricing-card-title">@Model.Name</h1>
+				<ul class="list-unstyled mt-3 mb-4">
+					<li>Created @Model.Created</li>
+					<li>Users @Model.Users.Count()</li>
+				</ul>
+				<form asp-controller="Home" asp-action="AddUser" method="post">
+					<input type="hidden" name="id" value="@Model.Id" />
+					<button type="submit" class="w-100 btn btn-lg btn-primary">JOIN</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>

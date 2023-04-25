@@ -1,7 +1,7 @@
 ﻿
 namespace LightMessanger.Contracts
 {
-    public class GroupMessage
+    public class GroupMessage : IEntityWithId
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,6 +15,7 @@ namespace LightMessanger.Contracts
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
+        public DateTime Created { get; set; } = DateTime.UtcNow;
         [ForeignKey("group_id")]
         [Required]
         public int ChatGroupId { get; set; }

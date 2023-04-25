@@ -1,7 +1,7 @@
 ﻿
 namespace LightMessanger.Contracts
 {
-    public class User
+    public class User : IEntityWithId
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,9 +22,7 @@ namespace LightMessanger.Contracts
         public virtual IList<Group> Groups { get; set; } = new List<Group>();
         public virtual IList<Group> CreatedGroups { get; set; } = new List<Group>();
 
-        public virtual IList<Chat> Chats { get; set; } = new List<Chat>();
-
-        public virtual IList<Message> Messages { get; set; } = new List<Message>();
+       
         public virtual IList<GroupMessage> GroupMessages { get; set; } = new List<GroupMessage>();
 
     }

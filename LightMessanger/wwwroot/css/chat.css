@@ -1,0 +1,37 @@
+
+.listchats {
+    margin-left: 1%;
+    
+}
+#yourchats {
+    overflow: hidden;
+    
+}
+    #yourchats li {
+        background-color: white;
+        border-bottom:  solid;
+    }
+        #yourchats li:hover {
+            background-color: azure;
+        }
+.profile {
+    margin-left: 1%;
+    margin-top: 1%;
+}
+.info-chat
+{
+    background-color:aliceblue;
+    border-radius: 5px;
+}
+.chat
+{
+    text-decoration:none !important;
+    color: black;
+}
+.messages {
+    max-height: 500px;
+    overflow: auto;
+}
+.active-chat {
+    background-color: #B0C4DE !important;
+}

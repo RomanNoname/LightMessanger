@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "b120fc95-46f2-4b1a-975d-7120ea70260a": {
+      "ProjectGuid": "b120fc95-46f2-4b1a-975d-7120ea70260a",
+      "DisplayName": "LightMessanger.WEB",
+      "ColorIndex": 0
+    },
+    "e91c95f2-5dc2-42d7-b9a9-8856f3fbf6a0": {
+      "ProjectGuid": "e91c95f2-5dc2-42d7-b9a9-8856f3fbf6a0",
+      "DisplayName": "LightMessanger.Contracts",
+      "ColorIndex": 1
+    },
+    "1c0172f0-9134-438d-982e-bb98d2006de1": {
+      "ProjectGuid": "1c0172f0-9134-438d-982e-bb98d2006de1",
+      "DisplayName": "LightMessanger.DAL",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "a82d9fd6-025d-441a-9d99-06c8e7bee536": {
+      "ProjectGuid": "a82d9fd6-025d-441a-9d99-06c8e7bee536",
+      "DisplayName": "LightMessanger.BLL",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}

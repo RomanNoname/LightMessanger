@@ -1,7 +1,7 @@
 ﻿
 namespace LightMessanger.Contracts
 {
-    public class Group
+    public class Group : IEntityWithId
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,6 +15,8 @@ namespace LightMessanger.Contracts
 
         [Required]
         public int UserGeneratedId { get; set; }
+
+        [ForeignKey("UserGeneratedId")]
         public virtual User UserGenerated { get; set; }
 
         public virtual ICollection<User> Users { get; set; } = new List<User>();

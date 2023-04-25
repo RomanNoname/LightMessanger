@@ -1,7 +1,7 @@
 ﻿
 namespace LightMessanger.Contracts
 {
-    public class Message
+    public class Message : IEntityWithId
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

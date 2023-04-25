@@ -22,21 +22,6 @@ namespace LightMessanger.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ChatUser", b =>
-                {
-                    b.Property<int>("ChatsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ChatsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ChatUser");
-                });
-
             modelBuilder.Entity("GroupUser", b =>
                 {
                     b.Property<int>("GroupsId")
@@ -50,22 +35,6 @@ namespace LightMessanger.DAL.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("GroupUser");
-                });
-
-            modelBuilder.Entity("LightMessanger.Contracts.Chat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("LastMessage")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("LightMessanger.Contracts.Group", b =>
@@ -90,9 +59,6 @@ namespace LightMessanger.DAL.Migrations
                     b.Property<int>("UserGeneratedId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
@@ -100,9 +66,7 @@ namespace LightMessanger.DAL.Migrations
 
                     b.HasIndex("UserGeneratedId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ChatGroups");
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("LightMessanger.Contracts.GroupMessage", b =>
@@ -121,6 +85,9 @@ namespace LightMessanger.DAL.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
@@ -131,45 +98,6 @@ namespace LightMessanger.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("GroupMessages");
-                });
-
-            modelBuilder.Entity("LightMessanger.Contracts.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ChatId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("RecieverUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SenderUserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatId");
-
-                    b.HasIndex("RecieverUserId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("LightMessanger.Contracts.User", b =>
@@ -207,21 +135,6 @@ namespace LightMessanger.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ChatUser", b =>
-                {
-                    b.HasOne("LightMessanger.Contracts.Chat", null)
-                        .WithMany()
-                        .HasForeignKey("ChatsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LightMessanger.Contracts.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GroupUser", b =>
                 {
                     b.HasOne("LightMessanger.Contracts.Group", null)
@@ -240,14 +153,10 @@ namespace LightMessanger.DAL.Migrations
             modelBuilder.Entity("LightMessanger.Contracts.Group", b =>
                 {
                     b.HasOne("LightMessanger.Contracts.User", "UserGenerated")
-                        .WithMany()
+                        .WithMany("CreatedGroups")
                         .HasForeignKey("UserGeneratedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("LightMessanger.Contracts.User", null)
-                        .WithMany("CreatedGroups")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("UserGenerated");
                 });
@@ -271,34 +180,6 @@ namespace LightMessanger.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LightMessanger.Contracts.Message", b =>
-                {
-                    b.HasOne("LightMessanger.Contracts.Chat", null)
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId");
-
-                    b.HasOne("LightMessanger.Contracts.User", "Reciever")
-                        .WithMany("Messages")
-                        .HasForeignKey("RecieverUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LightMessanger.Contracts.User", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Reciever");
-
-                    b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("LightMessanger.Contracts.Chat", b =>
-                {
-                    b.Navigation("Messages");
-                });
-
             modelBuilder.Entity("LightMessanger.Contracts.Group", b =>
                 {
                     b.Navigation("GroupMessages");
@@ -309,8 +190,6 @@ namespace LightMessanger.DAL.Migrations
                     b.Navigation("CreatedGroups");
 
                     b.Navigation("GroupMessages");
-
-                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

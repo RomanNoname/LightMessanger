@@ -39,3 +39,14 @@ C:\Users\roman\source\repos\LightMessanger\LightMessanger\obj\Debug\net6.0\Light
 C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\Humanizer.dll
 C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\System.Web.Mvc.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\System.Web.Razor.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\System.Web.Helpers.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\System.Web.WebPages.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\Microsoft.Practices.ServiceLocation.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\XAct.Core.PCL.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\LightMessanger.BLL.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger\bin\Debug\net6.0\LightMessanger.BLL.pdb

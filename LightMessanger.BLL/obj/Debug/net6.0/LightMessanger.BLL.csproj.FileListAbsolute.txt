@@ -1,0 +1,17 @@
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.csproj.AssemblyReference.cache
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.AssemblyInfoInputs.cache
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.AssemblyInfo.cs
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.csproj.CoreCompileInputs.cache
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\LightMessanger.BLL.deps.json
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\LightMessanger.BLL.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\ref\LightMessanger.BLL.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\LightMessanger.BLL.pdb
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\LightMessanger.Contracts.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\LightMessanger.DAL.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\LightMessanger.Contracts.pdb
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\bin\Debug\net6.0\LightMessanger.DAL.pdb
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.csproj.CopyComplete
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\ref\LightMessanger.BLL.dll
+C:\Users\roman\source\repos\LightMessanger\LightMessanger.BLL\obj\Debug\net6.0\LightMessanger.BLL.pdb

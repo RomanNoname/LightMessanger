@@ -1,8 +1,176 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using LightMessanger.Contracts
+@using LightMessanger.WEB.Models
+@model GroupsChat
+
+@{
+	ViewData["Title"] = "Сhats";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="modal" class="modal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<div class="col-md-10 col-md-offset-1">
+			<form id="FormRegistration" class="form-horizontal" action="/Home/Create" method="post">
+				<div class="form-group">
+					<div class="form-group">
+						<input name="Name" type="text" minlength="3" required class="form-control" placeholder="Name">
+					</div>
+					<div class="form-group">
+
+						<button type="submit" class="btn btn-primary btn-block mt-3">Add</button>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
+<div class="dropdown text-start profile">
+	<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+		<b>@User.Identity?.Name</b>
+	</a>
+
+	<ul class="dropdown-menu text-small" style="">
+		<li><a class="dropdown-item" id="add-group">Add Group</a></li>
+		<li><hr class="dropdown-divider"><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+
+	</ul>
+</div>
+
+<div class="row chat-box">
+	<div class="col-md-2 listchats">
+		<form asp-controller="Home" asp-action="Index" method="get">
+			<div class="input-group">
+				<input type="text" name="search" class="form-control" value="@ViewBag?.Search" placeholder="Search here...">
+				<span class="input-group-btn">
+					<button type="submit" style="opacity: 0;left: -9999px">Search</button>
+				</span>
+			</div>
+		</form>
+		<ul id="yourchats">
+			@foreach (var item in Model.Groups.OrderByDescending(x=>x.LastMessage))
+			{
+				<a class="chat"  asp-controller="Home" asp-action="Index" asp-route-search="@ViewBag?.Search" asp-route-currentChat="@item.Name">
+					<li id="@item.Name"> @item.Name</li>
+				</a>
+			}
+		</ul>
+	</div>
+	@if (ViewBag?.Chat != null)
+	{
+		<div class="col-md-6 col-md-offset-1">
+			<h2>@ViewBag?.Chat</h2>
+			<div id="messages" class="messages">
+				<ul id="messagesList">
+					@foreach (var item in Model.Message)
+					{
+						@if (User.Identity.Name.Equals(item.User?.Name))
+						{
+							<li class="text-end"><b>@item?.User?.Name</b> <p>@item.Content</p></li>
+						}
+						else
+						{
+							<li><b>@item?.User?.Name</b> <p>@item.Content</p> </li>
+						}
+					}
+				</ul>
+			</div>
+		
+				<form id="sendButton" class="input-group">
+				<input type="text" id="messageInput" class="form-control" placeholder="Type your message here...">
+				<span class="input-group-btn">
+					<button  type="submit" class="btn btn-primary">Send</button>
+				</span>
+				</form>
+			
+		</div>
+	}
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
+<script>
+
+	var connection = new signalR.HubConnectionBuilder().withUrl("/groupChat").build();
+
+	document.getElementById("sendButton").disabled = true;
+
+	connection.on("ReceiveMessage"+"@ViewBag?.Chat", function (message, name) {
+	
+		var text = "text-start";
+		if("@User.Identity.Name"===name)
+			text="text-end";
+		var li = '<li class="'+text+'"> <b>'+name+'</b><p>'+message+"</p></li>";
+		
+		$("#messagesList").append(li);
+		var myDiv =  document.getElementById("messages");
+		myDiv.scrollTo(0, myDiv.scrollHeight);
+	});
+
+	connection.start().then(function () {
+		document.getElementById("sendButton").disabled = false;
+	}).catch(function (err) {
+		return console.error(err.toString());
+	});
+
+	document.getElementById("sendButton").addEventListener("submit", function (event) {
+		event.preventDefault();
+		var messageInput = document.getElementById("messageInput");
+		var message = messageInput.value;
+		messageInput.value = "";
+		connection.invoke("SendMessage", message, "@ViewBag?.Chat").catch(function (err) {
+			return console.error(err.toString());
+		});
+
+	var item = document.getElementById("@ViewBag.Chat");
+	var parent = item.parentNode;
+	var anchor = parent.parentNode;
+	anchor.removeChild(parent);
+	anchor.insertBefore(parent, anchor.firstChild);
+	});
+</script>
+<script>
+
+	var dropdown = document.getElementById('add-group');
+
+
+	var modal = document.getElementById('modal');
+
+	var closeBtn = document.querySelector('.close');
+
+
+	dropdown.addEventListener('click', function() {
+	  modal.style.display = 'block';
+	});
+
+
+	closeBtn.addEventListener('click', function() {
+	  modal.style.display = 'none';
+	});
+
+	window.addEventListener('click', function(event) {
+	  if (event.target == modal) {
+		modal.style.display = 'none';
+	  }
+	});
+</script>
+<script>
+	var myDiv =  document.getElementById("messages");
+	if(myDiv)
+	{
+		myDiv.scrollTo(0, myDiv.scrollHeight);
+	}
+  
+
+</script>
+
+<script>
+	var myDiv = document.getElementById("@ViewBag.Chat");
+	if(myDiv)
+	{
+		myDiv.classList.toggle("active-chat");
+	}
+</script>

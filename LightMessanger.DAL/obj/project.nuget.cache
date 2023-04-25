@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "3gXukeH79YT0PSvV+QAc9hVwwzsij4HJVp4jHWIBt8U1ZXMKSudwO0MyPwnjSNvSqsGIjrfMX5m6K/fa8XTXgA==",
+  "dgSpecHash": "yMKLp8uqWi9smfH+g3cOWNOUHv5VO1A8G7iUvC6p2jOUOrJVlbBXQiregJU4wt1l0XmK9fpmqiySRXz/VaIgDA==",
   "success": true,
   "projectFilePath": "C:\\Users\\roman\\source\\repos\\LightMessanger\\LightMessanger.DAL\\LightMessanger.DAL.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\roman\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.16\\microsoft.entityframeworkcore.analyzers.6.0.16.nupkg.sha512",
     "C:\\Users\\roman\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.16\\microsoft.entityframeworkcore.design.6.0.16.nupkg.sha512",
     "C:\\Users\\roman\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.16\\microsoft.entityframeworkcore.relational.6.0.16.nupkg.sha512",
+    "C:\\Users\\roman\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.16\\microsoft.entityframeworkcore.tools.6.0.16.nupkg.sha512",
     "C:\\Users\\roman\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\roman\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
     "C:\\Users\\roman\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

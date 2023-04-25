@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ul46TsQFJXuntzbX4wj7vBfik+HB2hhlGAmwYO2WUSU=",
+  "Hash": "TAd9SwIdPUVrDNULbRIy5hrj87iXPEPCOSB8vg6aYog=",
   "Source": "LightMessanger.WEB",
   "BasePath": "_content/LightMessanger.WEB",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\roman\\source\\repos\\LightMessanger\\LightMessanger\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\LightMessanger.WEB.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\roman\\source\\repos\\LightMessanger\\LightMessanger\\wwwroot\\css\\chat.css",
+      "SourceId": "LightMessanger.WEB",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\roman\\source\\repos\\LightMessanger\\LightMessanger\\wwwroot\\",
+      "BasePath": "_content/LightMessanger.WEB",
+      "RelativePath": "css/chat.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\chat.css"
     },
     {
       "Identity": "C:\\Users\\roman\\source\\repos\\LightMessanger\\LightMessanger\\wwwroot\\css\\site.css",

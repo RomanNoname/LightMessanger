@@ -1,0 +1,83 @@
+﻿@using LightMessanger.Contracts
+@model Group
+@{
+    ViewData["Title"] = @Model?.Name;
+}
+                @if (Model.Users.Any(x => x.Name == User.Identity.Name))
+                {
+                    <div class="col-md-6 col-md-offset-1">
+                    <h2>Global SignalR Chat</h2>
+                    <ul id="messagesList">
+                        @foreach (var item in Model.GroupMessages)
+                        {
+                            <li>@item.Content @item?.User?.Name</li>
+                        }
+                    </ul>
+                            <div class="input-group">
+                                <input type="text" id="messageInput" class="form-control" placeholder="Type your message here...">
+                                <span class="input-group-btn">
+                                    <button id="sendButton" class="btn btn-primary" type="button">Send</button>
+                                </span>
+                            </div>
+                    </div>
+                }
+                else
+                {
+                 
+                 <div class="row">
+                  <div class="col-auto text-center col-md-offset-5">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                      <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal"></h4>
+                      </div>
+                      <div class="card-body">
+                        <h1 class="card-title pricing-card-title">@Model.Name</h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                          <li>Created @Model.Created</li>
+                          <li>Users @Model.Users.Count()</li>
+                        </ul>
+                        <form asp-controller="Chat" asp-action="AddUser" method="post">
+                             <input type="hidden" name="id" value="@Model.Id" />
+                                <button type="submit" class="w-100 btn btn-lg btn-primary">JOIN</button>
+                       </form>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                
+             }
+           
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/groupChat").build();
+
+        document.getElementById("sendButton").disabled = true;
+
+        connection.on("ReceiveMessage"+"@Model.Name", function (message, name) {
+            var encodedMsg = $("<div />").text(message+" "+name).html();
+            var li = "<li>" + encodedMsg + "</li>";
+            $("#messagesList").append(li);
+            var messagesList = document.getElementById("messagesList");
+            messagesList.scrollTop = messagesList.scrollHeight;
+        });
+
+        connection.start().then(function () {
+            document.getElementById("sendButton").disabled = false;
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+            var messageInput = document.getElementById("messageInput");
+            var message = messageInput.value;
+            messageInput.value = "";
+            connection.invoke("SendMessage", message, "@Model.Name").catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        });
+    </script>
