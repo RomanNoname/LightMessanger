@@ -35,3 +35,6 @@
 .active-chat {
     background-color: #B0C4DE !important;
 }
+.unread-chat {
+    background-color: #ffcf5e !important;
+}

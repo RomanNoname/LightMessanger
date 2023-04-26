@@ -2,6 +2,7 @@
 using LightMessanger.BLL.Services;
 using LightMessanger.DAL.Interfaces;
 using LightMessanger.DAL.Repositories;
+using Microsoft.AspNetCore.SignalR;
 
 namespace LightMessanger.WEB
 {
@@ -17,6 +18,9 @@ namespace LightMessanger.WEB
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IGroupsService, GroupsService>();
             services.AddScoped<IGroupMessagesService, GroupMessagesService>();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            services.AddScoped<IUnreadMessagesRepository, UnreadMessagesRepository>();
+            services.AddScoped<IUnreadMessagesService, UnreadMessagesService>();
         }
     }
 }

@@ -6,53 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LightMessanger.WEB.Controllers
 {
+    [ApiController]
+    
+    [Route("api/[controller]")]
+    [Authorize]
     public class ChatController : Controller
     {
         private IUsersService _usersService;
         private IGroupsService _groupsService;
-        public ChatController(IUsersService usersService, IGroupsService groupsService)
+        private IUnreadMessagesService _unreadMessagesService;
+        public ChatController(IUsersService usersService, IGroupsService groupsService, IUnreadMessagesService unreadMessagesService)
         {
             _usersService = usersService;
             _groupsService = groupsService;
+            _unreadMessagesService = unreadMessagesService;
         }
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Create(string name)
+        [Route("AddUnreadMessage")]
+        public async Task<IActionResult> AddUnreadMessage(string groupName)
         {
-            var user = await _usersService.GetValueByСonditionAsync(e => e.Name, User.Identity.Name);
-            var group = new Group() { Name = name, UserGenerated = user };
-            await _groupsService.AddAsync(group);
-            await _groupsService.AddUserInGroup(user, group.Id);
-            return RedirectToAction("Index", "Home");
-        }
-        [HttpGet]
-        [Authorize]
-        [Route("chat/{name}")]
-        public async Task<IActionResult> Chat(string name)
-        {
-            Response.Cookies.Append("chat", name);
-            var model = await _groupsService.GetGroupWithUsers(name);
-            return View(model);
-        }
-        [HttpGet]
-        [Authorize]
-        [Route("chats")]
-        public async Task<IActionResult> Chats()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> AddUser(int id)
-        {
-            var user = await _usersService.GetValueByСonditionAsync(u => u.Name, User.Identity.Name);
-            if (user != null)
+            var user = await _usersService.GetUserGroupsAsync(u => u.Name, User.Identity.Name);
+            var group = user.Groups.FirstOrDefault(g => g.Name == groupName);
+            var unread = new UnreadMessages()
             {
-                await _groupsService.AddUserInGroup(user, id);
-                return RedirectToAction("Chat", "Chat", new { name = (await _groupsService.GetByIdAsync(id)).Name });
-            }
-            return RedirectToAction("Login", "Account");
+                User = user,
+                Group = group
+            };
+            await _unreadMessagesService.AddAsync(unread);
+            return Ok();
         }
     }
 }

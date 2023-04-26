@@ -51,9 +51,18 @@
 		<ul id="yourchats">
 			@foreach (var item in Model.Groups.OrderByDescending(x=>x.LastMessage))
 			{
-				<a class="chat"  asp-controller="Home" asp-action="Index" asp-route-search="@ViewBag?.Search" asp-route-currentChat="@item.Name">
-					<li id="@item.Name"> @item.Name</li>
-				</a>
+				@if (Model.Unread.Contains(item.Id))
+				{
+					<a class="chat"  asp-controller="Home" asp-action="Index" asp-route-search="@ViewBag?.Search" asp-route-currentChat="@item.Name">
+						<li class="unread-chat" id="@item.Name"> @item.Name</li>
+					</a>
+				}
+				else
+				{
+					<a class="chat"  asp-controller="Home" asp-action="Index" asp-route-search="@ViewBag?.Search" asp-route-currentChat="@item.Name">
+						<li id="@item.Name"> @item.Name</li>
+					</a>
+				}
 			}
 		</ul>
 	</div>
@@ -96,7 +105,8 @@
 
 	var connection = new signalR.HubConnectionBuilder().withUrl("/groupChat").build();
 
-	document.getElementById("sendButton").disabled = true;
+	if(document.getElementById("sendButton"))
+		document.getElementById("sendButton").disabled = true;
 
 	connection.on("ReceiveMessage"+"@ViewBag?.Chat", function (message, name) {
 	
@@ -108,6 +118,40 @@
 		$("#messagesList").append(li);
 		var myDiv =  document.getElementById("messages");
 		myDiv.scrollTo(0, myDiv.scrollHeight);
+	});
+	connection.on("ReceiveMessage"+"@ViewBag?.Chat", function (message, name) {
+	
+		var text = "text-start";
+		if("@User.Identity.Name"===name)
+			text="text-end";
+		var li = '<li class="'+text+'"> <b>'+name+'</b><p>'+message+"</p></li>";
+		
+		$("#messagesList").append(li);
+		var myDiv =  document.getElementById("messages");
+		myDiv.scrollTo(0, myDiv.scrollHeight);
+	});
+	connection.on("Notifications", function (name,sender) {
+		var item = document.getElementById(name);
+		if(name!="@ViewBag?.Chat"&&sender!="@User?.Identity.Name")
+			{
+				if(!item.classList.contains("unread-chat"))
+				item.classList.toggle("unread-chat");
+
+				//var xhr = new XMLHttpRequest();
+				//xhr.open("POST", "/api/Chat/AddUnreadMessage?groupName="+name);
+				// xhr.onload = function () {
+				//if (xhr.status === 200)
+				//	console.log("ok");
+				//else
+				//	console.log(xhr.status);
+				// }
+				//xhr.send();
+			}
+		
+		var parent = item.parentNode;
+		var anchor = parent.parentNode;
+		anchor.removeChild(parent);
+		anchor.insertBefore(parent, anchor.firstChild);
 	});
 
 	connection.start().then(function () {

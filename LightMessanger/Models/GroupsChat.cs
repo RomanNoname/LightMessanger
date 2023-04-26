@@ -6,6 +6,8 @@ namespace LightMessanger.WEB.Models
     {
         public IEnumerable<Group> Groups { get; set; }
         public IEnumerable<GroupMessage> Message { get; set; }
-       
+
+        public IEnumerable<int> Unread { get; set; }
+
     }
 }

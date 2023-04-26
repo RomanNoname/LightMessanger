@@ -22,7 +22,7 @@ namespace LightMessanger.Contracts
         public virtual IList<Group> Groups { get; set; } = new List<Group>();
         public virtual IList<Group> CreatedGroups { get; set; } = new List<Group>();
 
-       
+        public virtual IList<UnreadMessages> UnreadMessages { get; set; } = new List<UnreadMessages>();
         public virtual IList<GroupMessage> GroupMessages { get; set; } = new List<GroupMessage>();
 
     }

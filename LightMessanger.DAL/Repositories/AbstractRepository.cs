@@ -11,29 +11,29 @@ namespace LightMessanger.DAL.Repositories
         {
             _context = context;
         }
-        public async Task AddAsync(T item)
+        public virtual async Task AddAsync(T item)
         {
             await _context.Set<T>().AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(T item)
+        public virtual async Task DeleteAsync(T item)
         {
             _context.Set<T>().Remove(item);
             await _context.SaveChangesAsync();
         }
 
-        public async virtual Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async virtual Task<T> GetByIdAsync(int id)
+        public virtual async  Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>().SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task UpdateAsync(T item)
+        public virtual async Task UpdateAsync(T item)
         {
             _context.Set<T>().Update(item);
             await _context.SaveChangesAsync();

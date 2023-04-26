@@ -15,13 +15,15 @@ namespace LightMessanger.Controllers
         private IUsersService _usersService;
         private IGroupsService _groupsService;
         private IGroupMessagesService _groupMessagesService;
-        public HomeController(ILogger<HomeController> logger, IUsersService usersService, IGroupsService groupsService, IGroupMessagesService groupMessagesService)
+        private IUnreadMessagesService _unreadMessagesService;
+        public HomeController(ILogger<HomeController> logger, IUsersService usersService, IGroupsService groupsService, IGroupMessagesService groupMessagesService, IUnreadMessagesService unreadMessagesService)
         {
 
             _logger = logger;
             _groupsService = groupsService;
             _usersService = usersService;
             _groupMessagesService = groupMessagesService;
+            _unreadMessagesService = unreadMessagesService;
         }
 
 
@@ -43,6 +45,23 @@ namespace LightMessanger.Controllers
                 model.Groups = (await _usersService.GetAllIncludes(e => e.Name, User.Identity.Name)).Groups;
             else
                 model.Groups = await _groupsService.SearchBySubstringInNameAsync(search);
+
+
+            var user = await _usersService.GetValueByСonditionAsync(u => u.Name, User.Identity.Name);
+            var group = await _groupsService.GetValueByСonditionAsync(u => u.Name, currentChat);
+
+            if (group != null)
+            {
+                var read = await _unreadMessagesService.GetUnreadMessagesAsync(user.Id, group.Id);
+                if(read != null)    
+                await _unreadMessagesService.DeleteRangeAsync(read);
+            }
+
+            ///
+           
+            var unread = await _unreadMessagesService.GetAsync();
+             model.Unread= unread.Where(m=>m.UserId == user.Id).Select(x=>x.GroupId);
+            ///
 
             model.Message = await _groupMessagesService.GetGroupMessagesByGroupNameAsync(currentChat);
             return View(model);

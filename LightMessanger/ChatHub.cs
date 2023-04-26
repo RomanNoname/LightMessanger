@@ -4,23 +4,17 @@ namespace SignalRProject
 {
     public class ChatHub : Hub
     {
-        public async Task SendMessage(string message)
+        public async Task Connect()
         {
-            string sender = Context?.User?.Identity?.Name;
-            if(Context.User.Identity.IsAuthenticated)
-                await this.Clients.All.SendAsync("ReceiveMessage", message, sender);
-            else
-                await this.Clients.All.SendAsync("ReceiveMessage", message, "Anonymous");
+            // Add the user to a group based on their username
+            var username = Context.User.Identity.Name;
+            await Groups.AddToGroupAsync(Context.ConnectionId, username);
         }
-        //public override async Task OnConnectedAsync()
-        //{
-        //    await Clients.All.SendAsync("ReceiveMessage", $"{Context.ConnectionId} вошел в чат");
-        //    await base.OnConnectedAsync();
-        //}
-        //public override async Task OnDisconnectedAsync(Exception exception)
-        //{
-        //    await Clients.All.SendAsync("ReceiveMessage", $"{Context.ConnectionId} покинул в чат");
-        //    await base.OnDisconnectedAsync(exception);
-        //}
+
+        public async Task SendMessageToUser(string username, string message)
+        {
+            // Send a message to a user by their username
+            await Clients.Group(username).SendAsync("ReceiveMessage", message);
+        }
     }
 }
