@@ -13,7 +13,7 @@
 			<form id="FormRegistration" class="form-horizontal" action="/Home/Create" method="post">
 				<div class="form-group">
 					<div class="form-group">
-						<input name="Name" type="text" minlength="3" required class="form-control" placeholder="Name">
+						<input name="Name" type="text" maxlength="30" minlength="3" required class="form-control" placeholder="Name">
 					</div>
 					<div class="form-group">
 
@@ -43,6 +43,7 @@
 		<form asp-controller="Home" asp-action="Index" method="get">
 			<div class="input-group">
 				<input type="text" name="search" class="form-control" value="@ViewBag?.Search" placeholder="Search here...">
+				<input type="hidden" name="currentChat" value="@ViewBag?.Chat">
 				<span class="input-group-btn">
 					<button type="submit" style="opacity: 0;left: -9999px">Search</button>
 				</span>
@@ -51,18 +52,17 @@
 		<ul id="yourchats">
 			@foreach (var item in Model.Groups.OrderByDescending(x=>x.LastMessage))
 			{
-				@if (Model.Unread.Contains(item.Id))
-				{
-					<a class="chat"  asp-controller="Home" asp-action="Index" asp-route-search="@ViewBag?.Search" asp-route-currentChat="@item.Name">
-						<li class="unread-chat" id="@item.Name"> @item.Name</li>
-					</a>
-				}
-				else
-				{
-					<a class="chat"  asp-controller="Home" asp-action="Index" asp-route-search="@ViewBag?.Search" asp-route-currentChat="@item.Name">
-						<li id="@item.Name"> @item.Name</li>
-					</a>
-				}
+				
+				<a class="chat"  asp-controller="Home" asp-action="Index" asp-route-search="@ViewBag?.Search" asp-route-currentChat="@item.Name">
+					@if (Model.Unread.Contains(item.Id))
+					{
+						<li class="unread-chat" id="@item.Name"><p class="count-unread">@Model.Unread.Where(m=>m.Equals(item.Id)).Count()</p>  <p>@item.Name</p> </li>
+					}
+					else
+					{
+						<li id="@item.Name"> <p>@item.Name</p></li>
+					}
+				</a>
 			}
 		</ul>
 	</div>
@@ -119,33 +119,26 @@
 		var myDiv =  document.getElementById("messages");
 		myDiv.scrollTo(0, myDiv.scrollHeight);
 	});
-	connection.on("ReceiveMessage"+"@ViewBag?.Chat", function (message, name) {
-	
-		var text = "text-start";
-		if("@User.Identity.Name"===name)
-			text="text-end";
-		var li = '<li class="'+text+'"> <b>'+name+'</b><p>'+message+"</p></li>";
-		
-		$("#messagesList").append(li);
-		var myDiv =  document.getElementById("messages");
-		myDiv.scrollTo(0, myDiv.scrollHeight);
-	});
 	connection.on("Notifications", function (name,sender) {
 		var item = document.getElementById(name);
 		if(name!="@ViewBag?.Chat"&&sender!="@User?.Identity.Name")
 			{
 				if(!item.classList.contains("unread-chat"))
-				item.classList.toggle("unread-chat");
-
-				//var xhr = new XMLHttpRequest();
-				//xhr.open("POST", "/api/Chat/AddUnreadMessage?groupName="+name);
-				// xhr.onload = function () {
-				//if (xhr.status === 200)
-				//	console.log("ok");
-				//else
-				//	console.log(xhr.status);
-				// }
-				//xhr.send();
+					{			
+						item.classList.toggle("unread-chat");
+								var p = item.childNodes[0];
+								var newP = document.createElement("p");
+								newP.innerText="1";
+								newP.classList.toggle("count-unread");
+									console.log(newP);
+								item.insertBefore(newP,p);
+							
+					}
+				else
+					{
+						if(item.getElementsByClassName("count-unread"))
+							item.getElementsByClassName("count-unread")[0].innerHTML=Number(item.getElementsByClassName("count-unread")[0].innerHTML)+1;
+					}
 			}
 		
 		var parent = item.parentNode;
@@ -159,8 +152,8 @@
 	}).catch(function (err) {
 		return console.error(err.toString());
 	});
-
-	document.getElementById("sendButton").addEventListener("submit", function (event) {
+	
+		document.getElementById("sendButton").addEventListener("submit", function (event) {
 		event.preventDefault();
 		var messageInput = document.getElementById("messageInput");
 		var message = messageInput.value;
@@ -168,53 +161,11 @@
 		connection.invoke("SendMessage", message, "@ViewBag?.Chat").catch(function (err) {
 			return console.error(err.toString());
 		});
-
+	
 	var item = document.getElementById("@ViewBag.Chat");
 	var parent = item.parentNode;
 	var anchor = parent.parentNode;
 	anchor.removeChild(parent);
 	anchor.insertBefore(parent, anchor.firstChild);
 	});
-</script>
-<script>
-
-	var dropdown = document.getElementById('add-group');
-
-
-	var modal = document.getElementById('modal');
-
-	var closeBtn = document.querySelector('.close');
-
-
-	dropdown.addEventListener('click', function() {
-	  modal.style.display = 'block';
-	});
-
-
-	closeBtn.addEventListener('click', function() {
-	  modal.style.display = 'none';
-	});
-
-	window.addEventListener('click', function(event) {
-	  if (event.target == modal) {
-		modal.style.display = 'none';
-	  }
-	});
-</script>
-<script>
-	var myDiv =  document.getElementById("messages");
-	if(myDiv)
-	{
-		myDiv.scrollTo(0, myDiv.scrollHeight);
-	}
-  
-
-</script>
-
-<script>
-	var myDiv = document.getElementById("@ViewBag.Chat");
-	if(myDiv)
-	{
-		myDiv.classList.toggle("active-chat");
-	}
 </script>

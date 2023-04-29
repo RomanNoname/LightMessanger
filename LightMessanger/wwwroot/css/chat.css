@@ -37,4 +37,19 @@
 }
 .unread-chat {
     background-color: #ffcf5e !important;
+    display: flex;
+    
+}
+.count-unread {
+    margin-right: 1%;
+    background-color: #a6a8a5;
+    color:aliceblue;
+    border-radius: 50%;
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

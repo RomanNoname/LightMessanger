@@ -25,7 +25,12 @@
       "ProjectGuid": "a82d9fd6-025d-441a-9d99-06c8e7bee536",
       "DisplayName": "LightMessanger.BLL",
       "ColorIndex": 3
+    },
+    "919fd655-f067-4ba2-b932-d926e85dd6b4": {
+      "ProjectGuid": "919fd655-f067-4ba2-b932-d926e85dd6b4",
+      "DisplayName": "Script Documents",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 5
 }

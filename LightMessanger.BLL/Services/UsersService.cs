@@ -30,6 +30,10 @@ namespace LightMessanger.BLL.Services
                 throw new ArgumentException("Invalid Password");
             if (!Regex.IsMatch(item.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
                 throw new ArgumentException("Invalid Email");
+            if (await GetValueByСonditionAsync(u => u.Name, item.Name) != null)
+                throw new ArgumentException("User name already exist");
+            if (await GetValueByСonditionAsync(u => u.Email, item.Email) != null)
+                throw new ArgumentException("User email already exist");
             item.Password = SHA256Managed(item.Password);
 
             await _context.AddAsync(item);
@@ -70,7 +74,11 @@ namespace LightMessanger.BLL.Services
                 throw new ArgumentException("Invalid Password");
             if (!Regex.IsMatch(item.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
                 throw new ArgumentException("Invalid Email");
-           
+            if (await GetValueByСonditionAsync(u => u.Name, item.Name) != null)
+                throw new ArgumentException("User name already exist");
+            if (await GetValueByСonditionAsync(u => u.Email, item.Email) != null)
+                throw new ArgumentException("User email already exist");
+
 
             await _context.UpdateAsync(item);
         }
@@ -89,6 +97,7 @@ namespace LightMessanger.BLL.Services
 
             if (!string.IsNullOrEmpty(password))
                 password = SHA256Managed(password);
+
             return await _context.GetUserByLoginPasswordAsync(login, password);
         }
 
@@ -107,43 +116,7 @@ namespace LightMessanger.BLL.Services
             });
         }
 
-        //public async Task<string> AddImage(string nameFolder, string name, IFormFile file)
-        //{
-        //    if (File.Exists(_folder + (await _context.GetByName(name)).Image))
-        //    {
-        //        File.Delete(_folder + (await _context.GetByName(name)).Image);
-        //    }
-        //    if (string.IsNullOrWhiteSpace(nameFolder))
-        //        throw new ArgumentNullException(nameof(nameFolder));
-        //    if (string.IsNullOrWhiteSpace(name))
-        //        throw new ArgumentNullException(nameof(name));
-        //    if (file is null)
-        //        throw new ArgumentNullException(nameof(file));
-
-        //    string uploadPath = _folder + "/" + nameFolder;
-
-        //    Directory.CreateDirectory(uploadPath);
-
-
-        //    var fileName = $"{name}.{Path.GetExtension(file.FileName).Replace(".", "")}";
-
-        //    string fullPath = $"{uploadPath}/{fileName}";
-
-
-        //    using (var fileStream = new FileStream(fullPath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(fileStream);
-        //    }
-
-        //    await _context.AddImage("/" + nameFolder + "/" + fileName, name);
-
-        //    return "/" + nameFolder + "/" + fileName;
-        //}
-
-        //public async Task<User> GetByName(string name)
-        //{
-        //    return await _context.GetByName(name);
-        //}
+        
     }
 }
 

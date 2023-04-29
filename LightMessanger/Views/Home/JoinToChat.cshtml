@@ -16,7 +16,7 @@
 					<li>Users @Model.Users.Count()</li>
 				</ul>
 				<form asp-controller="Home" asp-action="AddUser" method="post">
-					<input type="hidden" name="id" value="@Model.Id" />
+					<input type="hidden" name="name" value="@Model.Name" />
 					<button type="submit" class="w-100 btn btn-lg btn-primary">JOIN</button>
 				</form>
 			</div>

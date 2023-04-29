@@ -12,7 +12,7 @@ namespace LightMessanger.WEB
         private IUsersService _usersService;
         private IGroupsService _groupsService; 
         private IUnreadMessagesService _unreadMessagesService;
-        private static Dictionary<string, List<string>> _groupUsers = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> _groupUsers = new Dictionary<string, List<string>>();
         public GroupChatHub(IGroupMessagesService groupMessagesService, IUsersService usersService, IGroupsService groupsService, IUnreadMessagesService unreadMessagesService)
         {
             _groupMessagesService = groupMessagesService;
@@ -34,13 +34,19 @@ namespace LightMessanger.WEB
                 {
                     Content = message,
                     User = user,
-                    ChatGroup = group
+                    ChatGroup = group,
+                    UserId = user.Id,
+                    ChatGroupId = group.Id
+                    
                 };
                 await _groupMessagesService.AddAsync(newMessage);
+
                 await Clients.Group(nameChat).SendAsync("ReceiveMessage" + nameChat, message, sender);
+
+                await AddUnreadMessagesToDisconnectedUsers(group.Name);
+
                 foreach (var item in group.Users)
                 {
-                    await AddUnreadMessagesToDisconnectedUsers(group.Name);
                     await Clients.Group(item.Name).SendAsync("Notifications", group.Name, sender);
                 }
 
@@ -53,6 +59,8 @@ namespace LightMessanger.WEB
             var userName = Context.User.Identity?.Name;
 
             //need short
+
+
             if (Context.GetHttpContext().Request.Cookies.ContainsKey("chat") &&
                 (await _groupsService.GetGroupWithUsers(Context.GetHttpContext().Request.Cookies["chat"])).Users.Any(u => u.Name.Equals(userName)))
             {
@@ -91,6 +99,8 @@ namespace LightMessanger.WEB
                 var unread = new UnreadMessages()
                 {
                     User = user,
+                    UserId = user.Id,
+                    GroupId = group.Id,
                     Group = group
                 };
                 await _unreadMessagesService.AddAsync(unread);

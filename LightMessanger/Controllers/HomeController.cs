@@ -1,6 +1,7 @@
 ﻿using LightMessanger.BLL.Interfaces;
 using LightMessanger.Contracts;
 using LightMessanger.Models;
+using LightMessanger.WEB.Filters;
 using LightMessanger.WEB.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace LightMessanger.Controllers
             _unreadMessagesService = unreadMessagesService;
         }
 
-
+        [NonExistenChatFilter]
         public async Task<IActionResult> Index(string search, string currentChat)
         {
             GroupsChat model = new GroupsChat();
@@ -49,18 +50,15 @@ namespace LightMessanger.Controllers
 
             var user = await _usersService.GetValueByСonditionAsync(u => u.Name, User.Identity.Name);
             var group = await _groupsService.GetValueByСonditionAsync(u => u.Name, currentChat);
-
-            if (group != null)
-            {
-                var read = await _unreadMessagesService.GetUnreadMessagesAsync(user.Id, group.Id);
-                if(read != null)    
-                await _unreadMessagesService.DeleteRangeAsync(read);
-            }
+            var read = await _unreadMessagesService.GetUnreadMessagesAsync(user.Id, group.Id);
+                if (read != null)
+                    await _unreadMessagesService.DeleteRangeAsync(read);
+            
 
             ///
-           
+
             var unread = await _unreadMessagesService.GetAsync();
-             model.Unread= unread.Where(m=>m.UserId == user.Id).Select(x=>x.GroupId);
+            model.Unread = unread.Where(m => m.UserId == user.Id).Select(x => x.GroupId).ToList();
             ///
 
             model.Message = await _groupMessagesService.GetGroupMessagesByGroupNameAsync(currentChat);
@@ -69,13 +67,13 @@ namespace LightMessanger.Controllers
         }
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddUser(int id)
+        public async Task<IActionResult> AddUser(string name)
         {
             var user = await _usersService.GetValueByСonditionAsync(u => u.Name, User.Identity.Name);
             if (user != null)
             {
-                await _groupsService.AddUserInGroup(user, id);
-                return RedirectToAction("Index", "Home", new { currentChat = (await _groupsService.GetByIdAsync(id)).Name });
+                await _groupsService.AddUserInGroup(user, name);
+                return RedirectToAction("Index", "Home", new { currentChat = ((await _groupsService.GetValueByСonditionAsync(u => u.Name, name)).Name)});
             }
             return RedirectToAction("Login", "Account");
         }
@@ -92,8 +90,8 @@ namespace LightMessanger.Controllers
             var user = await _usersService.GetValueByСonditionAsync(e => e.Name, User.Identity.Name);
             var group = new Group() { Name = name, UserGenerated = user };
             await _groupsService.AddAsync(group);
-            await _groupsService.AddUserInGroup(user, group.Id);
-            return RedirectToAction("Index", "Home",new {currentChat = name});
+            await _groupsService.AddUserInGroup(user, group.Name);
+            return RedirectToAction("Index", "Home", new { currentChat = name });
         }
     }
 }
